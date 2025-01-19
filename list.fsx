@@ -11,6 +11,27 @@ let allPairs lst1 lst2 =
       inner2 lst2 acc
   inner lst1 lst2 []
 
+let append lst1 lst2 =
+  lst1 @ lst2
 
-let people = [ "Kirk"; "Spock"; "McCoy" ]
-let numbers = [ 1; 2 ]
+let average lst =
+  match lst with
+  | [] -> failwith "empty list"
+  | _ -> List.sum lst / List.length lst 
+
+let averageBy projection lst =
+  match lst with
+  | [] -> failwith "empty list"
+  | x ->
+    List.sum (List.map projection lst) / List.length lst
+    
+[<TailCall>]
+let choose chooser lst =
+  let rec inner lst acc =
+    match lst with
+    | [] -> acc
+    | h::t ->
+      match chooser h with
+      |Some x -> inner t (x::acc)
+      |None -> inner t acc
+  inner lst []
