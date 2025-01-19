@@ -35,3 +35,14 @@ let choose chooser lst =
       |Some x -> inner t (x::acc)
       |None -> inner t acc
   inner lst []
+
+[<TailCall>]
+let chunkBySize chunkSize lst =
+  let rec inner lst acc chunk =
+    match lst with
+    | [] -> acc |> List.rev
+    | h::t ->
+      if List.length chunk = chunkSize then
+        inner t (chunk::acc) [h]
+      else inner t acc (h::chunk)
+  inner lst [] []
