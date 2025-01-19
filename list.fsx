@@ -46,3 +46,12 @@ let chunkBySize chunkSize lst =
         inner t (chunk::acc) [h]
       else inner t acc (h::chunk)
   inner lst [] []
+
+[<TailCall>]
+let collect mapping lst =
+  let rec inner lst acc =
+    match lst with
+    | [] -> acc |> List.rev
+    | h::t ->
+      inner t ((mapping h)::acc)
+  inner lst []
