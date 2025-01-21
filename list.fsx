@@ -55,3 +55,16 @@ let collect mapping lst =
     | h::t ->
       inner t ((mapping h)::acc)
   inner lst []
+
+[<TailCall>]
+let compareWith comparer lst1 lst2 =
+  let rec inner lst1 lst2 =
+    match lst1, lst2 with
+    | [], [] -> 0
+    | _, [] -> 1
+    | [], _ -> -1
+    | h1::t1, h2::t2 ->
+      let c = comparer h1 h2
+      if c =0 then inner t1 t2
+      else c
+  inner lst1 lst2
