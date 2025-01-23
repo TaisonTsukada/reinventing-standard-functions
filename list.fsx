@@ -77,3 +77,8 @@ let concat lst =
     | h::t -> inner t (h @ acc)
   inner lst []
 
+[<TailCall>]
+let rec contains v source =
+  match source with
+  | [] -> false
+  | h::t -> if h = v then  true else contains v t
