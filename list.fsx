@@ -68,3 +68,12 @@ let compareWith comparer lst1 lst2 =
       if c =0 then inner t1 t2
       else c
   inner lst1 lst2
+  
+[<TailCall>]
+let concat lst =
+  let rec inner lst acc =
+    match lst with
+    | [] -> acc |> List.rev
+    | h::t -> inner t (h @ acc)
+  inner lst []
+
