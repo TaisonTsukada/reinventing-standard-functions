@@ -82,3 +82,16 @@ let rec contains v source =
   match source with
   | [] -> false
   | h::t -> if h = v then  true else contains v t
+
+[<TailCall>]
+let countBy projection lst =
+  let rec inner lst acc =
+    match lst with
+    | [] -> acc |> List.rev
+    | h::t ->
+      let key = projection h
+      let count = acc |> List.tryFind (fun (k, _) -> k = key)
+      match count with
+      | Some (k, c) -> inner t ((k, c + 1)::(acc |> List.filter (fun (k, _) -> k <> key)))
+      | None -> inner t ((key, 1)::acc)
+  inner lst []
