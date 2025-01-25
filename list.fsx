@@ -95,3 +95,23 @@ let countBy projection lst =
       | Some (k, c) -> inner t ((k, c + 1)::(acc |> List.filter (fun (k, _) -> k <> key)))
       | None -> inner t ((key, 1)::acc)
   inner lst []
+
+[<TailCall>]
+let distinct lst =
+  let rec inner lst acc =
+    match lst with
+    | [] -> acc |> List.rev
+    | h::t ->
+      if contains h acc then inner t acc
+      else inner t (h::acc)
+  inner lst []
+
+[<TailCall>]
+let distictBy projection lst =
+  let rec inner lst acc =
+    match lst with
+    | [] -> acc |> List.rev
+    | h::t ->
+      if projection h |> contains acc then inner t acc
+      else inner t (h::acc)
+  inner lst []
