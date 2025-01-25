@@ -115,3 +115,11 @@ let distictBy projection lst =
       if projection h |> contains acc then inner t acc
       else inner t (h::acc)
   inner lst []
+
+let empty () = []
+
+let exactlyOne lst =
+  match lst with
+  | [] -> failwith "empty list"
+  | [x] -> x
+  | _ -> failwith "more than one element"
