@@ -123,3 +123,13 @@ let exactlyOne lst =
   | [] -> failwith "empty list"
   | [x] -> x
   | _ -> failwith "more than one element"
+  
+[<TailCall>]
+let except itemsToExclude lst =
+  let rec inner lst2 acc =
+    match lst2 with
+    | [] -> acc |> List.rev
+    | h::t ->
+      if contains h itemsToExclude then inner t acc
+      else inner t (h::acc)
+  inner lst []
