@@ -133,3 +133,8 @@ let except itemsToExclude lst =
       if contains h itemsToExclude then inner t acc
       else inner t (h::acc)
   inner lst []
+  
+let rec exists predicate lst =
+  match lst with
+  | [] -> false
+  | h::t -> if predicate h then true else exists predicate t
