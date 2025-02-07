@@ -138,3 +138,10 @@ let rec exists predicate lst =
   match lst with
   | [] -> false
   | h::t -> if predicate h then true else exists predicate t
+  
+let rec exists2 predicate lst1 lst2 =
+  match lst1, lst2 with
+  | [], [] -> false
+  | _, [] -> failwith "lists are not of the same length"
+  | [], _ -> failwith "lists are not of the same length"
+  | h1::t1, h2::t2 -> if predicate h1 h2 then true else exists2 predicate t1 t2 
