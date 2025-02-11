@@ -258,3 +258,11 @@ let rec head lst =
   match lst with
   | [] -> failwith "empty list"
   | h::_ -> h
+  
+[<TailCall>]
+let rec indexed lst =
+  let rec inner lst acc index =
+    match lst with
+    | [] -> acc |> List.rev
+    | h::t -> inner t ((index, h)::acc) ((+) 1 index)
+  inner lst [] 0
