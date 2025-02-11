@@ -198,3 +198,12 @@ let fold folder state list =
     | h::t -> inner t (folder acc h)
   inner list state
 
+[<TailCall>]
+let fold2 folder state lst1 lst2 =
+  let rec inner lst1 lst2 acc =
+    match lst1, lst2 with
+    |[], [] -> acc
+    |h1::t1, h2::t2 -> inner t1 t2 (folder acc h1 h2)
+    |_, _ -> failwith "lists are not of the same length"
+  inner lst1 lst2 state
+
