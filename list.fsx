@@ -154,3 +154,11 @@ let filter predicate lst =
       if predicate h then inner t (h::acc)
       else inner t acc
   inner lst []
+
+
+[<TailCall>]
+let rec find predicate lst =
+  match lst with
+  | [] -> failwith "not found"
+  | h::t -> if predicate h then h
+            else find predicate t
