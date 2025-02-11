@@ -239,3 +239,21 @@ let rec forall2 predicate lst1 lst2 =
                       else false
   | _, _ -> failwith "lists are not of the same length"
 
+[<TailCall>]
+let groupBy projection lst =
+  let rec inner lst acc =
+    match lst with
+    | [] -> acc
+    |h::t ->
+      let key = projection h
+      let group = acc |> List.tryFind (fun (k, _) -> k = key)
+      match group with
+      | Some (k, g) -> 
+        let group = h::g |> List.rev
+        inner t ((k, group)::(acc |> List.filter (fun (k, _) -> k <> key)))
+      | None -> inner t ((key, [h])::acc)
+  inner lst []
+
+let inputs = [1; 2; 3; 4; 5;6;7;8]
+
+inputs |> groupBy (fun n -> n % 2)
