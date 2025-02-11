@@ -189,3 +189,12 @@ let findIndexBack predicate lst =
     | h::t -> if predicate h then inner t acc ((+) 1 index)
               else inner t acc index
   inner lst 0 0
+  
+[<TailCall>]
+let fold folder state list =
+  let rec inner lst acc =
+    match lst with
+    | [] -> acc
+    | h::t -> inner t (folder acc h)
+  inner list state
+
