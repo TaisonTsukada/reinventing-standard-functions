@@ -162,3 +162,12 @@ let rec find predicate lst =
   | [] -> failwith "not found"
   | h::t -> if predicate h then h
             else find predicate t
+                    
+[<TailCall>]
+let findBack predicate lst =
+  let rec inner lst acc =
+    match lst with
+    | [] -> if acc = [] then failwith "not found" else List.head acc
+    | h::t -> if predicate h then inner t (h::acc)
+              else inner t acc
+  inner lst []
