@@ -230,3 +230,12 @@ let rec forall predicate lst =
   | [] -> true
   | h::t -> if predicate h then forall predicate t
             else false
+
+[<TailCall>]
+let rec forall2 predicate lst1 lst2 =
+  match lst1, lst2 with
+  | [], [] -> true
+  | h1::t1, h2::t2 -> if predicate h1 h2 then forall2 predicate t1 t2
+                      else false
+  | _, _ -> failwith "lists are not of the same length"
+
