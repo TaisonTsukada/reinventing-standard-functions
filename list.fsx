@@ -223,3 +223,10 @@ let foldBack2 folder list1 list2 state =
     | h1::t1, h2::t2 -> inner t1 t2 (folder h1 h2 acc)
     | _, _ -> failwith "lists are not of the same length"
   inner list1 list2 state
+  
+[<TailCall>]
+let rec forall predicate lst =
+  match lst with
+  | [] -> true
+  | h::t -> if predicate h then forall predicate t
+            else false
