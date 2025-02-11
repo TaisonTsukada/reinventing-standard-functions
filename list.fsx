@@ -252,3 +252,9 @@ let groupBy projection lst =
         inner t ((k, h::g)::(acc |> List.filter (fun (k, _) -> k <> key)))
       | None -> inner t ((key, [h])::acc)
   inner lst []
+
+[<TailCall>]
+let rec head lst =
+  match lst with
+  | [] -> failwith "empty list"
+  | h::_ -> h
