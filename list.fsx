@@ -171,3 +171,12 @@ let findBack predicate lst =
     | h::t -> if predicate h then inner t (h::acc)
               else inner t acc
   inner lst []
+
+[<TailCall>]
+let findIndex predicate lst =
+  let rec inner lst acc =
+    match lst with
+    | [] -> failwith "not found"
+    | h::t -> if predicate h then acc
+              else inner t ((+) 1 acc)
+  inner lst 0
