@@ -207,3 +207,10 @@ let fold2 folder state lst1 lst2 =
     |_, _ -> failwith "lists are not of the same length"
   inner lst1 lst2 state
 
+[<TailCall>]
+let foldBack folder list state = 
+  let rec inner lst acc =
+    match lst with
+    | [] -> acc
+    | h::t -> inner t (folder h acc)
+  inner list state
