@@ -249,11 +249,6 @@ let groupBy projection lst =
       let group = acc |> List.tryFind (fun (k, _) -> k = key)
       match group with
       | Some (k, g) -> 
-        let group = h::g |> List.rev
-        inner t ((k, group)::(acc |> List.filter (fun (k, _) -> k <> key)))
+        inner t ((k, h::g)::(acc |> List.filter (fun (k, _) -> k <> key)))
       | None -> inner t ((key, [h])::acc)
   inner lst []
-
-let inputs = [1; 2; 3; 4; 5;6;7;8]
-
-inputs |> groupBy (fun n -> n % 2)
