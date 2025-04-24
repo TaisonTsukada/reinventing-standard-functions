@@ -275,3 +275,16 @@ let init length initializer =
     elif index < length then inner length (index + 1) (initializer index :: acc)
     else failwith "negative length"
   inner length 0 []
+
+[<TailCall>]
+let insertAt index value source =
+  if index < 0 then failwith "negative index"
+  elif index > List.length source then failwith "index is greater than the length of the list"
+  else
+    let rec inner lst acc i =
+      match lst with
+      | [] -> acc |> List.rev
+      | h::t ->
+        if index = i then inner t (value::h::acc) (i + 1)
+        else inner t (h::acc) (i + 1)
+    inner source [] 0
