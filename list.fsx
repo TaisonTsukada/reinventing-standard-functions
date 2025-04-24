@@ -266,3 +266,12 @@ let rec indexed lst =
     | [] -> acc |> List.rev
     | h::t -> inner t ((index, h)::acc) ((+) 1 index)
   inner lst [] 0
+
+
+[<TailCall>]
+let init length initializer =
+  let rec inner length index acc =
+    if index = length then acc |> List.rev
+    elif index < length then inner length (index + 1) (initializer index :: acc)
+    else failwith "negative length"
+  inner length 0 []
